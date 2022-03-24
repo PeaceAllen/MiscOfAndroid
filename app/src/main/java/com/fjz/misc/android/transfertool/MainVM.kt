@@ -3,7 +3,10 @@ package com.fjz.misc.android.transfertool
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fjz.misc.android.transfertool.entity.ApiResponse
+import com.fjz.misc.android.transfertool.http.RestHelper
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 
 /**
@@ -12,13 +15,19 @@ import kotlinx.coroutines.launch
  */
 class MainVM: ViewModel() {
 
-    val mUrlFromServer = MutableLiveData("")
+    val mUrlFromServer = MutableLiveData<ApiResponse<String?>?>()
 
     fun getUrlFromServer() {
 
         viewModelScope.launch {
 
-            mUrlFromServer.value = "url form server: http://baidu.com"
+            val response = try {
+                RestHelper.mRestApi.getHttpUrl()
+            } catch (e: Exception) {
+                ApiResponse(msg = e.localizedMessage, -1)
+            }
+
+            mUrlFromServer.value = response
         }
 
 
