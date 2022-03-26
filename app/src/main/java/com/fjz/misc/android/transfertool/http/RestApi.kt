@@ -1,6 +1,7 @@
 package com.fjz.misc.android.transfertool.http
 
 import com.fjz.misc.android.transfertool.entity.ApiResponse
+import com.fjz.misc.android.transfertool.entity.Config
 import retrofit2.http.GET
 
 /**
@@ -10,6 +11,6 @@ import retrofit2.http.GET
 interface RestApi {
 
     @GET(HTTP_URL)
-    suspend fun getHttpUrl(): ApiResponse<String?>?
+    suspend fun getHttpUrl(): ApiResponse<Config?>?
 
 }

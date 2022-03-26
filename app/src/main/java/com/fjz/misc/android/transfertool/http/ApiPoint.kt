@@ -7,4 +7,4 @@ package com.fjz.misc.android.transfertool.http
  */
 
 const val BASE_URL = "http://192.168.1.7:8080/api/"
-const val HTTP_URL = "http_url"
+const val HTTP_URL = "config/http_url"

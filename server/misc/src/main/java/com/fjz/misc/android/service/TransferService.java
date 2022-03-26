@@ -29,23 +29,36 @@ public class TransferService {
 
     public int insertOneConfiguration(String key, String value) {
 
-        Configurations conf = new Configurations();
+        int count = 0;
 
-        conf.setId(null);
-        conf.setKey(key);
-        conf.setValue(value);
-
-        int count = configurationMapper.insert(conf);
-
+        Configurations conf = getValueByKey(key);
+        if (conf == null) {
+            conf = new Configurations();
+            conf.setId(null);
+            conf.setKey(key);
+            conf.setValue(value);
+            count = configurationMapper.insert(conf);
+        } else {
+            conf.setValue(value);
+            configurationMapper.updateById(conf);
+        }
 
         return count;
+    }
+
+    public int delByKey(String key) {
+        Configurations config = getValueByKey(key);
+        if (config != null) {
+            configurationMapper.deleteById(config);
+        }
+        return 0;
     }
 
     public Configurations getValueByKey(String key) {
 
         QueryWrapper<Configurations> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("key", key)
-                .select("key", "value");
+                .select("id", "key", "value");
 
         Configurations config = configurationMapper.selectOne(queryWrapper);
 

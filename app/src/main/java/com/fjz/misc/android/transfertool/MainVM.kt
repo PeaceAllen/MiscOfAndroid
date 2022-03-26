@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fjz.misc.android.transfertool.entity.ApiResponse
+import com.fjz.misc.android.transfertool.entity.Config
 import com.fjz.misc.android.transfertool.http.RestHelper
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -15,7 +16,7 @@ import java.lang.Exception
  */
 class MainVM: ViewModel() {
 
-    val mUrlFromServer = MutableLiveData<ApiResponse<String?>?>()
+    val mUrlFromServer = MutableLiveData<ApiResponse<Config?>?>()
 
     fun getUrlFromServer() {
 

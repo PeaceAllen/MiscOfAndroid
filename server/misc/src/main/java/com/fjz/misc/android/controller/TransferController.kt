@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import javax.swing.plaf.TextUI
 
 @RestController
 @RequestMapping("/api/config/")
@@ -28,9 +29,26 @@ class TransferController {
     }
 
     @PostMapping("add")
-    fun addOrUpdateConfig(@RequestParam("key") key: String, @RequestParam("value")  value: String) : ApiResponse<Int> {
-        val count = transferService.insertOneConfiguration(key, value)
-        return ApiResponse(data = count)
+    fun addOrUpdateConfig(@RequestParam("key") key: String = "",
+                          @RequestParam("value")  value: String = "") : ApiResponse<Int> {
+
+        if (key.isNotBlank() && value.isNotBlank()) {
+            val count = transferService.insertOneConfiguration(key, value)
+            return ApiResponse.success(data = count)
+        } else {
+            return ApiResponse.error("invalid key or value", -1)
+        }
+    }
+
+    @PostMapping("del")
+    fun delConfig(@RequestParam("key") key: String = ""): ApiResponse<Int> {
+
+        if (key.isNotBlank()) {
+            transferService.delByKey(key)
+            return ApiResponse.success(data = null)
+        } else {
+            return ApiResponse.error(msg = "Invalid key: $key", code = -1)
+        }
     }
 
 
@@ -39,6 +57,6 @@ class TransferController {
 
         val config = transferService.getValueByKey(key)
 
-        return ApiResponse("success", 200, config)
+        return ApiResponse.success(data = config)
     }
 }

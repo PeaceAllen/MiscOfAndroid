@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Url From Server: "
-            android:text="@{vm.mUrlFromServer.data}"/>
+            android:text="@{vm.mUrlFromServer.data.value}"/>
 
         <Button
             android:id="@+id/btnGetUrl"
